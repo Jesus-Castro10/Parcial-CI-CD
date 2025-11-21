@@ -25,6 +25,10 @@ jobs:
           VALIDATE_JSCPD: false
           VALIDATE_MARKDOWN: false
           VALIDATE_GOOGLE_JAVA_FORMAT: false
+          VALIDATE_BASH: false
+          VALIDATE_SHELL: false
+          VALIDATE_YAML: false
+          VALIDATE_SHELL_SH: false
           JAVA_CHECKSTYLE_CONFIG_FILE: ./.github/checkstyle.xml
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
