@@ -1,17 +1,82 @@
-# Sales-system
-Sales System es una aplicación diseñada para facilitar y optimizar la gestión de ventas en una tienda o empresa.Este sistema permite el manejo eficiente de productos, clientes, inventarios, facturación, y reportes de ventas. Proporciona una interfaz intuitiva y fácil de usar para el personal de ventas y los administradores.
+# Parcial – CI/CD
 
-# Características
+Este proyecto implementa un pipeline de Integración Continua (CI) utilizando **GitHub Actions** y soporte para ejecución local mediante **nektos/act**.  
+Incluye:
 
-- Gestión de Productos: Registro, actualización y seguimiento de productos.
-- Gestión de Clientes: Administración de la información de los clientes.
-- Gestión de Inventario: Control de stock, alertas de bajo inventario.
-- Facturación y Pagos: Generación y gestión de facturas y recibos.
-- Reportes de Ventas: Generación de reportes detallados de ventas y análisis.
-- Usuarios y Roles: Gestión de usuarios y asignación de roles y permisos.
+- Linter obligatorio (Checkstyle para Java).
+- Pruebas automatizadas con JUnit.
+- Reporte de cobertura con JaCoCo.
+- Validación de umbral mínimo de cobertura.
+- Build del proyecto.
+- Ejecución local con act para simular GitHub Actions.
 
-![Captura de pantalla (1053)](https://github.com/Jesus-Castro10/Sales-system/assets/148921370/f55dc6ad-0b34-45e0-b41f-259c5d86b307)
+---
 
-![Captura de pantalla (1054)](https://github.com/Jesus-Castro10/Sales-system/assets/148921370/8619d2c5-4a27-4a7d-a536-3d8e9898f77a)
+## 🚀 ¿Cómo funciona el pipeline?
 
-![Captura de pantalla (1055)](https://github.com/Jesus-Castro10/Sales-system/assets/148921370/ebd4a6d9-a549-4658-a0e9-ebfff594f40f)
+El workflow principal está ubicado en:
+```.github/workflows/ci-quality.yml```
+
+Este pipeline se ejecuta automáticamente en:
+
+- Cada `push` a la rama `main`
+- Cada `pull_request` contra `main`
+
+### Etapas del pipeline
+
+1. **Checkout del repositorio**
+2. **Linter (Checkstyle)**  
+   Valida que el código Java cumpla reglas básicas de estilo.
+3. **Pruebas automatizadas (JUnit)**
+4. **Reporte de cobertura (JaCoCo)**
+5. **Validación del umbral mínimo de cobertura**  
+   El pipeline fallará si es inferior al valor configurado (por ejemplo ≥ 90%).
+6. **Build del proyecto**
+7. **Construcción y validación con Docker** (si aplica)
+
+Si cualquier etapa falla, el pipeline se detiene inmediatamente.
+
+---
+
+## 🛠️ Requisitos del proyecto
+
+- Java 17  
+- Maven 3.9.x  
+- Docker (solo si se usa act o el job de Docker)
+
+---
+
+## 📊 Linter utilizado
+
+El proyecto utiliza:
+
+Checkstyle (via Super-Linter)
+La configuración del linter se encuentra en:
+```.github/linters/checkstyle.xml```
+
+
+---
+
+## 🧪 Ejecución local con act
+
+Este proyecto se puede ejecutar localmente mediante **nektos/act**, que permite simular GitHub Actions.
+
+### ¿Qué es act?
+
+**Act** es una herramienta que ejecuta localmente los workflows de GitHub Actions utilizando contenedores Docker.  
+Permite probar el pipeline sin necesidad de hacer push al repositorio.
+
+### Requisitos
+
+- Docker instalado y corriendo
+- act instalado (`brew install act`, `choco install act-cli`, o binario directo)
+
+### Comando para ejecutar el pipeline completo
+```act push```
+
+### Para ejecutar solo el job del linter:
+```act -j lint```
+
+
+### Para ejecutar pruebas y cobertura:
+```act -j test```
